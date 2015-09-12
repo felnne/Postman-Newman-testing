@@ -1,0 +1,611 @@
+{
+	"id": "44e015e2-460f-3a77-bc68-74c53e7b9afa",
+	"owner": "1485",
+	"name": "BAS People API - Version 1 [Test Runner]",
+	"description": "### BAS People API - Version 1 - Test Runner Collection\n\n#### Audience\n\nThis collection is reserved for automated testing.\n\nFor end-user reference, testing and experimentation see the *Reference* collection instead.\n\n#### Usage\n\nTODO:\n\n* Environment\n* Token request setup\n* Task runner\n* Newman",
+	"order": [
+		"58d151e8-ba1f-89da-0ae0-122d2054e118",
+		"e9bc0318-249e-f0be-6fb6-066f3c6e0d09",
+		"51345a45-bdfd-e98b-8ffe-9364d4953e92",
+		"55205d71-23f9-a4b3-c0cf-a041d6f9a114",
+		"09385747-ed0b-f4bc-d1fe-f2783955233b",
+		"207e6dba-0adc-f0b8-c20c-eb61df1079a1"
+	],
+	"folders": [],
+	"timestamp": 1441965282698,
+	"remoteLink": "",
+	"public": false,
+	"lastUpdatedBy": {
+		"id": "1485",
+		"username": "Felix Fennell"
+	},
+	"lastRevision": 2915956,
+	"team": null,
+	"requests": [
+		{
+			"id": "09385747-ed0b-f4bc-d1fe-f2783955233b",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{auth-token}}\n",
+			"url": "https://api.bas.ac.uk/people/v1/people/{{sample-person-alias}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "// Tests\n\n// Check response was successful\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n// Check response was returned in good time\ntests[\"Response time is less than 1s\"] = responseTime < 1000;\n\n// Check response has correct content-type\nvar contentTypeHeader = postman.getResponseHeader(\"Content-type\");\nif (contentTypeHeader !== null)\n{\n    tests[\"Content-Type is present\"] = true;\n}\nif (tests[\"Content-Type is present\"] === true && contentTypeHeader == 'application/json')\n{\n    tests[\"Content-Type is JSON\"] = true;\n}\n\n// Check response contains token value\n// TODO: Convert to JSON schema validation\ntests[\"Data is present\"] = false;\n\nif (tests[\"Content-Type is JSON\"] === true) {\n    var payload = JSON.parse(responseBody);\n    if (typeof payload.data !== 'undefined')\n    {\n        tests[\"Data is present\"] = true;\n    }\n}\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442077242912,
+			"name": "Request a person  (by alias)",
+			"description": "Requests a specific person by their alias.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n* `sample-person-alias`: An alias (i.e. NERUM ID) of a valid person\n\n",
+			"collectionId": "44e015e2-460f-3a77-bc68-74c53e7b9afa",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 273,
+					"headers": [
+						{
+							"name": "Cache-Control",
+							"key": "Cache-Control",
+							"value": "no-cache",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"name": "Content-Length",
+							"key": "Content-Length",
+							"value": "520",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"name": "Content-Type",
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "Date",
+							"key": "Date",
+							"value": "Fri, 11 Sep 2015 10:25:05 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "Server",
+							"key": "Server",
+							"value": "Apache",
+							"description": "A name for the server"
+						},
+						{
+							"name": "Vary",
+							"key": "Vary",
+							"value": "Authorization",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"data\":{\"id\":1976,\"encoded_id\":\"0abb105ac09fdbcec1f94deeb6a1a859\",\"shortref_id\":null,\"phone\":\"1222\",\"show_phone\":\"0\",\"email_id\":\"saran\",\"name_title\":\"Miss\",\"name_first\":\"Sarah\",\"name_middle\":\"Marie\",\"name_last\":\"Chapman\",\"pref_name_title\":null,\"pref_name_first\":\"Sarah\",\"pref_name_last\":null,\"job_title\":\"Scientific Data Manager\",\"show_job_title\":\"1\",\"updated_on\":\"2015-07-13 08:00:12\",\"email_address\":\"saran@bas.ac.uk\",\"avatars\":[],\"biography\":null,\"research_interests\":null,\"collaborations\":null,\"publications\":null}}",
+					"language": "javascript",
+					"rawDataType": "text",
+					"state": {
+						"size": "normal"
+					},
+					"previewType": "html",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"isSample": true,
+					"scrollToResult": true,
+					"runTests": true,
+					"id": "ddaedf2f-fd2e-9b2a-6db3-3f9a8e5ad82b",
+					"name": "200-success",
+					"request": {
+						"name": "Request a person  (by alias)",
+						"description": "Requests a specific person by their alias.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n* `sample-person-alias`: An alias (i.e. NERUM ID) of a valid person\n\n",
+						"url": "https://api.bas.ac.uk/people/v1/people/{{sample-person-alias}}",
+						"pathVariables": {},
+						"data": [],
+						"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{auth-token}}\n",
+						"dataMode": "params",
+						"method": "GET",
+						"tests": "",
+						"isFromCollection": true,
+						"write": true,
+						"version": 2
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"time": "273",
+					"headers": [
+						{
+							"name": "Cache-Control",
+							"key": "Cache-Control",
+							"value": "no-cache",
+							"description": ""
+						},
+						{
+							"name": "Content-Length",
+							"key": "Content-Length",
+							"value": "520",
+							"description": ""
+						},
+						{
+							"name": "Content-Type",
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": ""
+						},
+						{
+							"name": "Date",
+							"key": "Date",
+							"value": "Fri, 11 Sep 2015 10:25:05 GMT",
+							"description": ""
+						},
+						{
+							"name": "Server",
+							"key": "Server",
+							"value": "Apache",
+							"description": ""
+						},
+						{
+							"name": "Vary",
+							"key": "Vary",
+							"value": "Authorization",
+							"description": ""
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"data\":{\"id\":1976,\"encoded_id\":\"0abb105ac09fdbcec1f94deeb6a1a859\",\"shortref_id\":null,\"phone\":\"1222\",\"show_phone\":\"0\",\"email_id\":\"saran\",\"name_title\":\"Miss\",\"name_first\":\"Sarah\",\"name_middle\":\"Marie\",\"name_last\":\"Chapman\",\"pref_name_title\":null,\"pref_name_first\":\"Sarah\",\"pref_name_last\":null,\"job_title\":\"Scientific Data Manager\",\"show_job_title\":\"1\",\"updated_on\":\"2015-07-13 08:00:12\",\"email_address\":\"saran@bas.ac.uk\",\"avatars\":[],\"biography\":null,\"research_interests\":null,\"collaborations\":null,\"publications\":null}}",
+					"language": "javascript",
+					"rawDataType": "text",
+					"state": {
+						"size": "normal"
+					},
+					"previewType": "html",
+					"searchResultScrolledTo": "-1",
+					"name": "200-success",
+					"request": {
+						"name": "Request a person  (by alias)",
+						"description": "Requests a specific person by their alias.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n* `sample-person-alias`: An alias (i.e. NERUM ID) of a valid person\n\n",
+						"url": "https://api.bas.ac.uk/people/v1/people/{{sample-person-alias}}",
+						"pathVariables": {},
+						"data": [],
+						"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{auth-token}}\n",
+						"dataMode": "params",
+						"method": "GET",
+						"tests": "",
+						"isFromCollection": true,
+						"write": true,
+						"version": 2
+					},
+					"requestObject": "{\"name\":\"Request a person  (by alias)\",\"description\":\"Requests a specific person by their alias.\\n\\n#### Usage\\n\\nEnsure you have a suitable environment selected with the following variables defined:\\n\\n* `auth-token`: A valid API token generated using the *Request new API token* method\\n* `sample-person-alias`: An alias (i.e. NERUM ID) of a valid person\\n\\n\",\"url\":\"https://api.bas.ac.uk/people/v1/people/{{sample-person-alias}}\",\"pathVariables\":{},\"data\":[],\"headers\":\"Accept: application/json\\nContent-Type: application/json\\nAuthorization: Bearer {{auth-token}}\\n\",\"dataMode\":\"params\",\"method\":\"GET\",\"tests\":\"\",\"isFromCollection\":true,\"write\":true,\"version\":2}",
+					"owner": "1485",
+					"id": "ddaedf2f-fd2e-9b2a-6db3-3f9a8e5ad82b",
+					"lastUpdatedBy": {
+						"id": "1485",
+						"username": "Felix Fennell"
+					},
+					"createdAt": "2015-09-11T10:27:13.116Z",
+					"updatedAt": "2015-09-11T10:27:13.116Z",
+					"write": true
+				}
+			]
+		},
+		{
+			"id": "207e6dba-0adc-f0b8-c20c-eb61df1079a1",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{api-token}}\n",
+			"url": "https://api.bas.ac.uk/people/v1/tokens",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "// Tests\n\n// Check response was successful\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n// Check response was returned in good time\ntests[\"Response time is less than 1s\"] = responseTime < 1000;\n\n// Check response has correct content-type\nvar contentTypeHeader = postman.getResponseHeader(\"Content-type\");\nif (contentTypeHeader !== null)\n{\n    tests[\"Content-Type is present\"] = true;\n}\nif (tests[\"Content-Type is present\"] === true && contentTypeHeader == 'application/json')\n{\n    tests[\"Content-Type is JSON\"] = true;\n}\n\n// TODO: Check payload is valid\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442077304316,
+			"name": "Blacklist API Token",
+			"description": "Blacklists a non-expired API token to prevent any further use.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n",
+			"collectionId": "44e015e2-460f-3a77-bc68-74c53e7b9afa",
+			"responses": []
+		},
+		{
+			"id": "51345a45-bdfd-e98b-8ffe-9364d4953e92",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{auth-token}}\n",
+			"url": "https://api.bas.ac.uk/people/v1/people",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "// Tests\n\n// Check response was successful\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n// Check response was returned in good time\ntests[\"Response time is less than 3s\"] = responseTime < 3000;\n\n// Check response has correct content-type\nvar contentTypeHeader = postman.getResponseHeader(\"Content-type\");\nif (contentTypeHeader !== null)\n{\n    tests[\"Content-Type is present\"] = true;\n}\nif (tests[\"Content-Type is present\"] === true && contentTypeHeader == 'application/json')\n{\n    tests[\"Content-Type is JSON\"] = true;\n}\n\n// Check response contains token value\n// TODO: Convert to JSON schema validation\ntests[\"Data is present\"] = false;\n\nif (tests[\"Content-Type is JSON\"] === true) {\n    var payload = JSON.parse(responseBody);\n    if (typeof payload.data !== 'undefined')\n    {\n        tests[\"Data is present\"] = true;\n    }\n}\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442077193180,
+			"name": "Request all people",
+			"description": "Requests a listing of every person.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n",
+			"collectionId": "44e015e2-460f-3a77-bc68-74c53e7b9afa",
+			"responses": []
+		},
+		{
+			"id": "55205d71-23f9-a4b3-c0cf-a041d6f9a114",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{auth-token}}\n",
+			"url": "https://api.bas.ac.uk/people/v1/people/{{sample-person-id}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "// Tests\n\n// Check response was successful\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n// Check response was returned in good time\ntests[\"Response time is less than 1s\"] = responseTime < 1000;\n\n// Check response has correct content-type\nvar contentTypeHeader = postman.getResponseHeader(\"Content-type\");\nif (contentTypeHeader !== null)\n{\n    tests[\"Content-Type is present\"] = true;\n}\nif (tests[\"Content-Type is present\"] === true && contentTypeHeader == 'application/json')\n{\n    tests[\"Content-Type is JSON\"] = true;\n}\n\n// Check response contains token value\n// TODO: Convert to JSON schema validation\ntests[\"Data is present\"] = false;\n\nif (tests[\"Content-Type is JSON\"] === true) {\n    var payload = JSON.parse(responseBody);\n    if (typeof payload.data !== 'undefined')\n    {\n        tests[\"Data is present\"] = true;\n    }\n}\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442077224097,
+			"name": "Request a person  (by id)",
+			"description": "Requests a specific person by their identifier.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n* `sample-person-alias`: An API identifier of a valid person\n",
+			"collectionId": "44e015e2-460f-3a77-bc68-74c53e7b9afa",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 148,
+					"headers": [
+						{
+							"name": "Cache-Control",
+							"key": "Cache-Control",
+							"value": "no-cache",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"name": "Content-Length",
+							"key": "Content-Length",
+							"value": "520",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"name": "Content-Type",
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "Date",
+							"key": "Date",
+							"value": "Fri, 11 Sep 2015 10:29:49 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "Server",
+							"key": "Server",
+							"value": "Apache",
+							"description": "A name for the server"
+						},
+						{
+							"name": "Vary",
+							"key": "Vary",
+							"value": "Authorization",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"data\":{\"id\":1976,\"encoded_id\":\"0abb105ac09fdbcec1f94deeb6a1a859\",\"shortref_id\":null,\"phone\":\"1222\",\"show_phone\":\"0\",\"email_id\":\"saran\",\"name_title\":\"Miss\",\"name_first\":\"Sarah\",\"name_middle\":\"Marie\",\"name_last\":\"Chapman\",\"pref_name_title\":null,\"pref_name_first\":\"Sarah\",\"pref_name_last\":null,\"job_title\":\"Scientific Data Manager\",\"show_job_title\":\"1\",\"updated_on\":\"2015-07-13 08:00:12\",\"email_address\":\"saran@bas.ac.uk\",\"avatars\":[],\"biography\":null,\"research_interests\":null,\"collaborations\":null,\"publications\":null}}",
+					"language": "javascript",
+					"rawDataType": "text",
+					"state": {
+						"size": "normal"
+					},
+					"previewType": "html",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"isSample": true,
+					"scrollToResult": true,
+					"runTests": true,
+					"id": "0d825e3c-e97f-287e-1a61-e6d2a17dd136",
+					"name": "200-success",
+					"request": {
+						"name": "Request a person  (by id)",
+						"description": "Requests a specific person by their identifier.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n* `sample-person-alias`: An API identifier of a valid person\n",
+						"url": "https://api.bas.ac.uk/people/v1/people/{{sample-person-id}}",
+						"pathVariables": {},
+						"data": [],
+						"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{auth-token}}\n",
+						"dataMode": "params",
+						"method": "GET",
+						"tests": "",
+						"isFromCollection": true,
+						"version": 2
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"time": "148",
+					"headers": [
+						{
+							"name": "Cache-Control",
+							"key": "Cache-Control",
+							"value": "no-cache",
+							"description": ""
+						},
+						{
+							"name": "Content-Length",
+							"key": "Content-Length",
+							"value": "520",
+							"description": ""
+						},
+						{
+							"name": "Content-Type",
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": ""
+						},
+						{
+							"name": "Date",
+							"key": "Date",
+							"value": "Fri, 11 Sep 2015 10:29:49 GMT",
+							"description": ""
+						},
+						{
+							"name": "Server",
+							"key": "Server",
+							"value": "Apache",
+							"description": ""
+						},
+						{
+							"name": "Vary",
+							"key": "Vary",
+							"value": "Authorization",
+							"description": ""
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"data\":{\"id\":1976,\"encoded_id\":\"0abb105ac09fdbcec1f94deeb6a1a859\",\"shortref_id\":null,\"phone\":\"1222\",\"show_phone\":\"0\",\"email_id\":\"saran\",\"name_title\":\"Miss\",\"name_first\":\"Sarah\",\"name_middle\":\"Marie\",\"name_last\":\"Chapman\",\"pref_name_title\":null,\"pref_name_first\":\"Sarah\",\"pref_name_last\":null,\"job_title\":\"Scientific Data Manager\",\"show_job_title\":\"1\",\"updated_on\":\"2015-07-13 08:00:12\",\"email_address\":\"saran@bas.ac.uk\",\"avatars\":[],\"biography\":null,\"research_interests\":null,\"collaborations\":null,\"publications\":null}}",
+					"language": "javascript",
+					"rawDataType": "text",
+					"state": {
+						"size": "normal"
+					},
+					"previewType": "html",
+					"searchResultScrolledTo": "-1",
+					"name": "200-success",
+					"request": {
+						"name": "Request a person  (by id)",
+						"description": "Requests a specific person by their identifier.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-token`: A valid API token generated using the *Request new API token* method\n* `sample-person-alias`: An API identifier of a valid person\n",
+						"url": "https://api.bas.ac.uk/people/v1/people/{{sample-person-id}}",
+						"pathVariables": {},
+						"data": [],
+						"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer {{auth-token}}\n",
+						"dataMode": "params",
+						"method": "GET",
+						"tests": "",
+						"isFromCollection": true,
+						"version": 2
+					},
+					"requestObject": "{\"name\":\"Request a person  (by id)\",\"description\":\"Requests a specific person by their identifier.\\n\\n#### Usage\\n\\nEnsure you have a suitable environment selected with the following variables defined:\\n\\n* `auth-token`: A valid API token generated using the *Request new API token* method\\n* `sample-person-alias`: An API identifier of a valid person\\n\",\"url\":\"https://api.bas.ac.uk/people/v1/people/{{sample-person-id}}\",\"pathVariables\":{},\"data\":[],\"headers\":\"Accept: application/json\\nContent-Type: application/json\\nAuthorization: Bearer {{auth-token}}\\n\",\"dataMode\":\"params\",\"method\":\"GET\",\"tests\":\"\",\"isFromCollection\":true,\"version\":2}",
+					"owner": "1485",
+					"id": "0d825e3c-e97f-287e-1a61-e6d2a17dd136",
+					"lastUpdatedBy": {
+						"id": "1485",
+						"username": "Felix Fennell"
+					},
+					"createdAt": "2015-09-11T10:29:54.609Z",
+					"updatedAt": "2015-09-11T10:29:54.609Z",
+					"write": true
+				}
+			]
+		},
+		{
+			"id": "58d151e8-ba1f-89da-0ae0-122d2054e118",
+			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"url": "https://api.bas.ac.uk/people/v1/heartbeat",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "OPTIONS",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "// Check response was successful\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n// Check response was returned in good time\ntests[\"Response time is less than 1s\"] = responseTime < 1000;\n\n// Check response has correct content-type\nvar contentTypeHeader = postman.getResponseHeader(\"Content-type\");\nif (contentTypeHeader !== null)\n{\n    tests[\"Content-Type is present\"] = true;\n}\nif (tests[\"Content-Type is present\"] === true && contentTypeHeader == 'application/json')\n{\n    tests[\"Content-Type is JSON\"] = true;\n}\n\n// Check response contains heartbeat value\n// TODO: Convert to JSON schema validation\nif (tests[\"Content-Type is JSON\"] === true) {\n    var payload = JSON.parse(responseBody);\n    tests[\"Heartbeat is correct\"] = payload.data.heartbeat === 'badump, badump';\n}\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442077038938,
+			"name": "Get API heartbeat",
+			"description": "Returns a successful response if the API is currently available.",
+			"collectionId": "44e015e2-460f-3a77-bc68-74c53e7b9afa",
+			"responses": []
+		},
+		{
+			"id": "e9bc0318-249e-f0be-6fb6-066f3c6e0d09",
+			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"url": "https://api.bas.ac.uk/people/v1/tokens",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "// Tests\n\n// Check response was successful\ntests[\"Status code is 200\"] = responseCode.code === 200;\n\n// Check response was returned in good time\ntests[\"Response time is less than 1s\"] = responseTime < 1000;\n\n// Check response has correct content-type\nvar contentTypeHeader = postman.getResponseHeader(\"Content-type\");\nif (contentTypeHeader !== null)\n{\n    tests[\"Content-Type is present\"] = true;\n}\nif (tests[\"Content-Type is present\"] === true && contentTypeHeader == 'application/json')\n{\n    tests[\"Content-Type is JSON\"] = true;\n}\n\n// Check response contains token value\n// TODO: Convert to JSON schema validation\ntests[\"Token is correct\"] = false;\n\nif (tests[\"Content-Type is JSON\"] === true) {\n    var payload = JSON.parse(responseBody);\n    if (typeof payload.data.token !== 'undefined')\n    {\n        tests[\"Token is correct\"] = true;\n    }\n}\n\n\n// Environment configuration\n\nvar payload = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"auth-token\", payload.data.token);\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1442077022165,
+			"name": "Request new API token",
+			"description": "Requests a new API token using a specified user account.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-username`: The username of a valid API user account\n* `auth-password`: The corrisponding password to the API user account\n",
+			"collectionId": "44e015e2-460f-3a77-bc68-74c53e7b9afa",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 505,
+					"headers": [
+						{
+							"name": "Cache-Control",
+							"key": "Cache-Control",
+							"value": "no-cache",
+							"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+						},
+						{
+							"name": "Content-Length",
+							"key": "Content-Length",
+							"value": "414",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"name": "Content-Type",
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "Date",
+							"key": "Date",
+							"value": "Fri, 11 Sep 2015 10:15:15 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "Server",
+							"key": "Server",
+							"value": "Apache",
+							"description": "A name for the server"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"notices\":[{\"type\":\"token_generated\",\"details\":{\"expiry\":{\"expires\":1441970115,\"message\":\"This token will expire at: 2015-09-11 12:15:15, at which point you will need to request a new token.\"}}}],\"data\":{\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmJhcy5hYy51a1wvdjFcL3Rva2VucyIsInN1YiI6MSwiaWF0IjoxNDQxOTY2NTE1LCJleHAiOjE0NDE5NzAxMTV9.JzeXKqS4A2r3LQjLlBSIwlkRxC5xOQYRZjGCBJgKj8s\"}}",
+					"language": "javascript",
+					"rawDataType": "text",
+					"state": {
+						"size": "normal"
+					},
+					"previewType": "html",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"isSample": true,
+					"scrollToResult": true,
+					"runTests": true,
+					"id": "3f981504-3137-356a-fd16-d225af864964",
+					"name": "token-generated",
+					"request": {
+						"name": "Request new API token",
+						"description": "Requests a new API token using a specified user account.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-username`: The username of a valid API user account\n* `auth-password`: The corrisponding password to the API user account\n",
+						"url": "https://api.bas.ac.uk/people/v1/tokens",
+						"pathVariables": {},
+						"data": "{\n    \"username\": \"{{auth-username}}\",\n    \"password\": \"{{auth-password}}\"\n}\n",
+						"headers": "Accept: application/json\nContent-Type: application/json\n",
+						"dataMode": "raw",
+						"method": "POST",
+						"tests": "var payload = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"auth-token\", payload.data.token);\n",
+						"isFromCollection": true,
+						"version": 2
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK"
+					},
+					"time": "505",
+					"headers": [
+						{
+							"name": "Cache-Control",
+							"key": "Cache-Control",
+							"value": "no-cache",
+							"description": ""
+						},
+						{
+							"name": "Content-Length",
+							"key": "Content-Length",
+							"value": "414",
+							"description": ""
+						},
+						{
+							"name": "Content-Type",
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": ""
+						},
+						{
+							"name": "Date",
+							"key": "Date",
+							"value": "Fri, 11 Sep 2015 10:15:15 GMT",
+							"description": ""
+						},
+						{
+							"name": "Server",
+							"key": "Server",
+							"value": "Apache",
+							"description": ""
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"notices\":[{\"type\":\"token_generated\",\"details\":{\"expiry\":{\"expires\":1441970115,\"message\":\"This token will expire at: 2015-09-11 12:15:15, at which point you will need to request a new token.\"}}}],\"data\":{\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmJhcy5hYy51a1wvdjFcL3Rva2VucyIsInN1YiI6MSwiaWF0IjoxNDQxOTY2NTE1LCJleHAiOjE0NDE5NzAxMTV9.JzeXKqS4A2r3LQjLlBSIwlkRxC5xOQYRZjGCBJgKj8s\"}}",
+					"language": "javascript",
+					"rawDataType": "text",
+					"state": {
+						"size": "normal"
+					},
+					"previewType": "html",
+					"searchResultScrolledTo": "-1",
+					"name": "token-generated",
+					"request": {
+						"name": "Request new API token",
+						"description": "Requests a new API token using a specified user account.\n\n#### Usage\n\nEnsure you have a suitable environment selected with the following variables defined:\n\n* `auth-username`: The username of a valid API user account\n* `auth-password`: The corrisponding password to the API user account\n",
+						"url": "https://api.bas.ac.uk/people/v1/tokens",
+						"pathVariables": {},
+						"data": "{\n    \"username\": \"{{auth-username}}\",\n    \"password\": \"{{auth-password}}\"\n}\n",
+						"headers": "Accept: application/json\nContent-Type: application/json\n",
+						"dataMode": "raw",
+						"method": "POST",
+						"tests": "var payload = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"auth-token\", payload.data.token);\n",
+						"isFromCollection": true,
+						"version": 2
+					},
+					"requestObject": "{\"name\":\"Request new API token\",\"description\":\"Requests a new API token using a specified user account.\\n\\n#### Usage\\n\\nEnsure you have a suitable environment selected with the following variables defined:\\n\\n* `auth-username`: The username of a valid API user account\\n* `auth-password`: The corrisponding password to the API user account\\n\",\"url\":\"https://api.bas.ac.uk/people/v1/tokens\",\"pathVariables\":{},\"data\":\"{\\n    \\\"username\\\": \\\"{{auth-username}}\\\",\\n    \\\"password\\\": \\\"{{auth-password}}\\\"\\n}\\n\",\"headers\":\"Accept: application/json\\nContent-Type: application/json\\n\",\"dataMode\":\"raw\",\"method\":\"POST\",\"tests\":\"var payload = JSON.parse(responseBody);\\npostman.setEnvironmentVariable(\\\"auth-token\\\", payload.data.token);\\n\",\"isFromCollection\":true,\"version\":2}",
+					"owner": "1485",
+					"id": "3f981504-3137-356a-fd16-d225af864964",
+					"lastUpdatedBy": {
+						"id": "1485",
+						"username": "Felix Fennell"
+					},
+					"createdAt": "2015-09-11T10:15:25.685Z",
+					"updatedAt": "2015-09-11T10:15:25.685Z",
+					"write": true
+				}
+			],
+			"rawModeData": "{\n    \"username\": \"{{auth-username}}\",\n    \"password\": \"{{auth-password}}\"\n}\n"
+		}
+	]
+}

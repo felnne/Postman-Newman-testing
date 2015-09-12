@@ -1,0 +1,37 @@
+{
+	"id": "0308b12a-9ce1-1f6b-ed23-7faeb201e58e",
+	"name": "BAS People API - Version 1",
+	"values": [
+		{
+			"key": "auth-username",
+			"value": "AUTH_USERNAME",
+			"type": "text",
+			"name": "auth-username",
+			"enabled": true
+		},
+		{
+			"key": "auth-password",
+			"value": "AUTH_PASSWORD",
+			"type": "text",
+			"name": "auth-password",
+			"enabled": true
+		},
+		{
+			"key": "sample-person-id",
+			"value": "1976",
+			"type": "text",
+			"name": "sample-person-id",
+			"enabled": true
+		},
+		{
+			"key": "sample-person-alias",
+			"value": "saran",
+			"type": "text",
+			"name": "sample-person-alias",
+			"enabled": true
+		}
+	],
+	"timestamp": 1442077520329,
+	"synced": false,
+	"syncedFilename": ""
+}
