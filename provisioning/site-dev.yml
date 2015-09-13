@@ -4,7 +4,7 @@
 - name: setup testing node
   hosts: postman-newman-dev
   remote_user: controller
-  sudo: yes
+  become: yes
   roles:
     - nodejs
   tasks:
