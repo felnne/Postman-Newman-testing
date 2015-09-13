@@ -25,7 +25,6 @@ This API testing will form part of a Continuous Deployment (CD) process (i.e. on
 
 Roughly from highest to lowest priority:
 
-* Automate installation of `g++`, using `build-essentials`?, and `newman`
 * Use Postman's *data* file format for testing the getByID ad getByAlias methods of the People resource (i.e. don't hard-code in environment)
 * Test with Semaphore
 * Add JSON Schema validation to methods to better test payloads
@@ -47,10 +46,6 @@ For obvious reasons this file is **MUST NOT** be checked into source control and
 ```shell
 $ vagrant up
 $ ansible-playbook -i provisioning/development provisioning/site-dev.yml --vault-password-file provisioning/.vault_pass.txt
-
-$ ssh controller@postman-newman-dev-node1.v.m
-$ sudo apt-get install g++
-$ sudo npm install -g newman --unsafe-perm
 ```
 
 ## Usage
@@ -61,6 +56,8 @@ This project includes a Postman collection and environment [1] suitable for test
 $ ssh app@postman-newman-dev-node1.v.m
 $ newman -c collection.json -e environment.json
 ```
+
+Note: Newman is executed manually, rather than through Ansible, to prevent Ansible swallowing all output to `stdout` (i.e. the test results).
 
 [1] This environment file **SHOULD** include entries for API user credentials, however the values for these entries are stored in clear-text and therefore cannot be checked into source control.
 
