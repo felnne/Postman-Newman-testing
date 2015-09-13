@@ -11,13 +11,11 @@
     - name: install newman npm package globally
       npm: name=newman global=yes
 
-# - name: complete setup of web-server
-#   hosts: bas-style-kit-webservers-dev
-#   remote_user: app
-#   tasks:
-#     - name: install node dependencies through npm
-#       npm: path=/app
-#     - name: run less compilation gulp task
-#       command: "gulp less chdir=/app"
-#     - name: run jekyll build
-#       shell: "/usr/local/rvm/bin/rvm all do jekyll build chdir={{ app_root }} executable=/bin/bash"
+- name: setup newman
+  hosts: postman-newman-dev
+  remote_user: app
+  vars_files:
+    - data/api-auth.yml
+  tasks:
+    - name: generate environment file
+      template: src=templates/app/environment.json.j2 dest=/app/environment.json
