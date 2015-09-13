@@ -31,6 +31,7 @@ Roughly from highest to lowest priority:
 * Testing with Bamboo
 * Format README using normal conventions
 * Work on a proper way to store and distribute Ansible vault password files (add to prelude role? Download from team directory? [Private key for authentication] or S3 bucket? [ENV_VAR for authentication])
+* If Newman proves useful, convert into a proper BARC role
 
 ## Requirements
 
