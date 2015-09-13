@@ -1,0 +1,3 @@
+.vagrant
+node_modules
+environment-with-auth.json

@@ -1,0 +1,22 @@
+# This is an Ansible inventory file. It inherits from /etc/ansible/hosts if it exists
+# It organises hosts/nodes into logical groups which can then be used in playbooks
+
+# This inventory is for the 'development' environment
+
+# It is best practice to group hosts by location and purpose like so:
+
+[vagrant-dev]
+postman-newman-dev-node1.v.m
+
+[vagrant:children]
+vagrant-dev
+
+[all-servers:children]
+vagrant
+
+
+[postman-newman-dev]
+postman-newman-dev-node1.v.m
+
+[postman-newman:children]
+postman-newman-dev

@@ -1,0 +1,23 @@
+---
+# Setup infrastructure and application
+
+- name: setup testing node
+  hosts: postman-newman-dev
+  remote_user: controller
+  sudo: yes
+  roles:
+    - nodejs
+  tasks:
+    - name: install newman npm package globally
+      npm: name=newman global=yes
+
+# - name: complete setup of web-server
+#   hosts: bas-style-kit-webservers-dev
+#   remote_user: app
+#   tasks:
+#     - name: install node dependencies through npm
+#       npm: path=/app
+#     - name: run less compilation gulp task
+#       command: "gulp less chdir=/app"
+#     - name: run jekyll build
+#       shell: "/usr/local/rvm/bin/rvm all do jekyll build chdir={{ app_root }} executable=/bin/bash"
