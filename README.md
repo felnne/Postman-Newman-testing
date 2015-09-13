@@ -26,7 +26,6 @@ This API testing will form part of a Continuous Deployment (CD) process (i.e. on
 Roughly from highest to lowest priority:
 
 * Automate installation of `g++`, using `build-essentials`?, and `newman`
-* Add Ansible Vault support for including API user credentials in a secure manor and automatically populate environment file
 * Use Postman's *data* file format for testing the getByID ad getByAlias methods of the People resource (i.e. don't hard-code in environment)
 * Test with Semaphore
 * Add JSON Schema validation to methods to better test payloads
@@ -37,31 +36,27 @@ Roughly from highest to lowest priority:
 
 * Typical project requirements (Vagrant, Ansible, etc.)
 * A Postman collection and environment suitable for testing
+* Ansible vault password file [1]
 
 ## Setup
+[1] This playbook uses an Ansible vault managed variables file to set the API user credentials. The password for this vault is contained in `provisioning/vault_pass.txt` and passed to the `ansible-playbook` at run time.
+
+For obvious reasons this file is **MUST NOT** be checked into source control and instead be manually copied into place. Users can request this file by contacting the BAS Web & Applications Team, see the *Feedback* section of this README for details.
 
 As *Controller*:
 
 ```shell
+$ ansible-playbook -i provisioning/development provisioning/site-dev.yml --vault-password-file provisioning/.vault_pass.txt
 $ sudo apt-get install g++
 $ sudo npm install -g newman --unsafe-perm
 ```
-
-As *App*:
-
-```shell
-$ cp environment-no-auth.json environment-with-auth.json
-$ nano environment-with-auth.json
-```
-
-Fill in username and password values.
 
 ## Usage
 
 As *App*:
 
 ```shell
-$ newman -c collection.json -e environment-with-auth.json
+$ newman -c collection.json -e environment.json
 ```
 
 ## Feedback
