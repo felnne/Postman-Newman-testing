@@ -25,7 +25,6 @@ This API testing will form part of a Continuous Deployment (CD) process (i.e. on
 
 Roughly from highest to lowest priority:
 
-* Use Postman's *data* file format for testing the getByID ad getByAlias methods of the People resource (i.e. don't hard-code in environment)
 * Test with Semaphore
 * Add JSON Schema validation to methods to better test payloads
 * Testing with Bamboo
@@ -51,18 +50,22 @@ $ ansible-playbook -i provisioning/development provisioning/site-dev.yml --vault
 
 ## Usage
 
-This project includes a Postman collection and environment [1] suitable for testing the BAS People API. These are feed into Newman and the various tests specified in requests in the collection are executed.
+This project includes a Postman collection, data file [1] and environment [2] suitable for testing the BAS People API. These are feed into Newman and the various tests specified in requests in the collection are executed.
 
 ```shell
 $ ssh app@postman-newman-dev-node1.v.m
-$ newman -c collection.json -e environment.json
+$ newman -c collection.json -d data.json -e environment.json
 ```
 
 Note: Newman is executed manually, rather than through Ansible, to prevent Ansible swallowing all output to `stdout` (i.e. the test results).
 
-[1] This environment file **SHOULD** include entries for API user credentials, however the values for these entries are stored in clear-text and therefore cannot be checked into source control.
+[1] This data file is simply a JSON array with each value replacing an environment variable on each iteration [3]. The number of iterations is defined by the number of items in the JSON array.
+
+[2] This environment file **SHOULD** include entries for API user credentials, however the values for these entries are stored in clear-text and therefore cannot be checked into source control.
 
 To overcome this, the environment file is stored as a Ansible template with variable substitutions used for sensitive values, an Ansible vault managed variables file stores these sensitive values. This variables file a template task are included in the `site-dev.yml` playbook to dynamically create a *filled in* environment file. This file **MUST NOT** be checked into source control.
+
+[3] The variables set by this data file do not need to exist within the environment, values for the current iteration and *static* values defined in the environment file will be merged together. Consequently there is no difference in accessing a variable from the environment file or data file, both use the `{{variable}}` syntax.
 
 ## Feedback
 
