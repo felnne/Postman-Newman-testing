@@ -31,33 +31,40 @@ Roughly from highest to lowest priority:
 * Add JSON Schema validation to methods to better test payloads
 * Testing with Bamboo
 * Format README using normal conventions
+* Work on a proper way to store and distribute Ansible vault password files (add to prelude role? Download from team directory? [Private key for authentication] or S3 bucket? [ENV_VAR for authentication])
 
 ## Requirements
 
 * Typical project requirements (Vagrant, Ansible, etc.)
-* A Postman collection and environment suitable for testing
 * Ansible vault password file [1]
 
-## Setup
 [1] This playbook uses an Ansible vault managed variables file to set the API user credentials. The password for this vault is contained in `provisioning/vault_pass.txt` and passed to the `ansible-playbook` at run time.
 
 For obvious reasons this file is **MUST NOT** be checked into source control and instead be manually copied into place. Users can request this file by contacting the BAS Web & Applications Team, see the *Feedback* section of this README for details.
 
-As *Controller*:
+## Setup
 
 ```shell
+$ vagrant up
 $ ansible-playbook -i provisioning/development provisioning/site-dev.yml --vault-password-file provisioning/.vault_pass.txt
+
+$ ssh controller@postman-newman-dev-node1.v.m
 $ sudo apt-get install g++
 $ sudo npm install -g newman --unsafe-perm
 ```
 
 ## Usage
 
-As *App*:
+This project includes a Postman collection and environment [1] suitable for testing the BAS People API. These are feed into Newman and the various tests specified in requests in the collection are executed.
 
 ```shell
+$ ssh app@postman-newman-dev-node1.v.m
 $ newman -c collection.json -e environment.json
 ```
+
+[1] This environment file **SHOULD** include entries for API user credentials, however the values for these entries are stored in clear-text and therefore cannot be checked into source control.
+
+To overcome this, the environment file is stored as a Ansible template with variable substitutions used for sensitive values, an Ansible vault managed variables file stores these sensitive values. This variables file a template task are included in the `site-dev.yml` playbook to dynamically create a *filled in* environment file. This file **MUST NOT** be checked into source control.
 
 ## Feedback
 

@@ -7,9 +7,6 @@
   become: yes
   roles:
     - nodejs
-  tasks:
-    - name: install newman npm package globally
-      npm: name=newman global=yes
 
 - name: setup newman
   hosts: postman-newman-dev
