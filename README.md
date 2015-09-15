@@ -55,13 +55,13 @@ Roughly from highest to lowest priority:
 
 ### Alpha
 
-* Test with Semaphore
-    * Test using JUnit output format and if this helps us 
 * Add JSON Schema validation to methods to better test payloads
 
 ### Beta
 
 * Testing with Bamboo
+* ~~Test with Semaphore~~ (done, but not sub-tasks)
+    * Test using JUnit output format and if this helps us 
 * Format README using normal conventions
 * Work on a proper way to store and distribute Ansible vault password files (add to prelude role? Download from team directory? [Private key for authentication] or S3 bucket? [ENV_VAR for authentication])
 * If Newman proves useful, convert into a proper BARC role
