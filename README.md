@@ -1,6 +1,9 @@
 
 # Postman Newman testing
 
+Master - [![Build Status](https://semaphoreci.com/api/v1/projects/d8c4baad-0adf-4c81-9c37-4e0cdfbb7c01/540592/badge.svg)](https://semaphoreci.com/felnne/postman-newman-testing)
+Develop - [![Build Status](https://semaphoreci.com/api/v1/projects/d8c4baad-0adf-4c81-9c37-4e0cdfbb7c01/540590/badge.svg)](https://semaphoreci.com/felnne/postman-newman-testing)
+
 Simple project to use Postman's [Newman](https://github.com/postmanlabs/newman/) tool to test the BAS People API.
 
 ## Background
