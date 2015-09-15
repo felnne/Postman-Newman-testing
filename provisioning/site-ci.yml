@@ -11,7 +11,9 @@
         - g++
     - name: install newman globally
       # Ideally we would do this using the NPM module - but it requires github.com/ansible/ansible-modules-extras/pull/876 to be merged
-      command: npm install -g newman --unsafe-perm
+      # Note: For CI builds we can't use (and don't need SUDO), or the "--unsafe-perm" option for installing newman
+      command: npm install -g newman
+      become: no
 
 - name: setup newman
   hosts: localhost
