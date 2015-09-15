@@ -1,7 +1,8 @@
 ---
 
 - name: setup ci environment
-  hosts: all
+  hosts: localhost
+  connection: local
   become: yes
   tasks:
     - name: install g++ which is required to install newman's dependencies
@@ -13,7 +14,8 @@
       command: npm install -g newman --unsafe-perm
 
 - name: setup newman
-  hosts: all
+  hosts: localhost
+  connection: local
   vars_files:
     - data/api-auth.yml
   tasks:
