@@ -22,4 +22,4 @@
     - data/api-auth.yml
   tasks:
     - name: generate environment file
-      template: src=templates/app/environment.json.j2 dest=/app/environment.json
+      template: src=templates/app/environment.json.j2 dest=/home/runner/Postman-Newman-testing/environment.json
