@@ -5,12 +5,38 @@ Simple project to use Postman's [Newman](https://github.com/postmanlabs/newman/)
 
 ## Background
 
-This project will be developed using the Government Digital Service (GDS) design phases methodology. This defines five stages:
+This project is part of a project to add a testing and deployment workflow to BAS APIs in order to reduce manual testing/verification of changes, improve the speed changes are delivered and improve the robustness of our services.
+
+The tests performed by Newman will need to executed by *something*, ideally this would be some sort of Continuous Integration (CI) service, such as [Semaphore](semaphoreci.com) or [Bamboo](https://www.atlassian.com/software/bamboo), though manual testing will still be needed.
+
+This API testing will form part of a Continuous Deployment (CD) process (i.e. only deploy if tests are green). Ideally the CI and CD process would both be performed by the same service (in additional to manually) to reduce costs and configuration.
+
 Currently, Newman's tests can be run:
 
 * Manually*, through a *local VM** - see this README for setup & usage instructions
 * Automatically*, through **Semaphore CI** - see this [project](https://semaphoreci.com/felnne/postman-newman-testing/) and this README for additional comments
 
+This project is already a cautious success in that it has highlighted one major error (API tokens cannot be blacklisted) and several minor defects (incorrect status codes being returned etc.).
+
+### Why do these tests always fail?
+
+These tests include assessing the performance of the API, which, as the results of these tests show, isn't currently very good.
+
+Until this can be addressed **it is expected** when these tests are run together they will fail (i.e. if any one test fails, they all collectively fail).
+
+However, this only applies to the *performance* related tests, all the other *functional* tests should pass [1].
+
+### Project management
+
+This project will be developed using the Government Digital Service (GDS) design phases methodology [2].
+
+This project is in *Alpha*, when it reaches *Beta* it most likely be merged into this larger project. It is therefore not expected this project will move beyond *Beta* and move straight to *Retirement*.
+
+The Project Maintainer for this project is: [Felix Fennell](mailto:felnne@bas.ac.uk) [3].
+
+[1] Pedantic readers will spot that the test to 'blacklist a token' always fails - this is a genuine bug with the People API and needs resolving. It is not a bug with these tests and demonstrates how badly we've needed this!
+
+[2] This defines five stages:
 
 * *Discovery* - user requirements gathering
 * *Alpha* - prototyping based on user requirements
@@ -18,21 +44,20 @@ Currently, Newman's tests can be run:
 * *Live* - launch of project, improvements and maintenance
 * *Retirement* - either because it will be replaced or discontinued
 
-This project is part of a project to add a testing and deployment workflow to BAS APIs in order to reduce manual testing/verification of changes, improve the speed changes are delivered and improve the robustness of our services.
-
-This project is in *Alpha*, when it reaches *Beta* it most likely be merged into this larger project. It is therefore not expected this project will move beyond *Beta* and move straight to *Retirement*.
-
-The tests performed by Newman will need to executed by *something*, ideally this would be some sort of Continuous Integration (CI) service, such as [Semaphore](semaphoreci.com) or [Bamboo](https://www.atlassian.com/software/bamboo), though manual testing will still be needed.
-
-This API testing will form part of a Continuous Deployment (CD) process (i.e. only deploy if tests are green). Ideally the CI and CD process would both be performed by the same service (in additional to manually) to reduce costs and configuration.
+[3] Please use the information in the *Feedback* section, rather than direct contact.
 
 ## TODO
 
 Roughly from highest to lowest priority:
 
+### Alpha
+
 * Test with Semaphore
     * Test using JUnit output format and if this helps us 
 * Add JSON Schema validation to methods to better test payloads
+
+### Beta
+
 * Testing with Bamboo
 * Format README using normal conventions
 * Work on a proper way to store and distribute Ansible vault password files (add to prelude role? Download from team directory? [Private key for authentication] or S3 bucket? [ENV_VAR for authentication])
@@ -54,6 +79,8 @@ Roughly from highest to lowest priority:
 For obvious reasons this file is **MUST NOT** be checked into source control and instead be manually copied into place. Users can request this file by contacting the BAS Web & Applications Team, see the *Feedback* section of this README for details.
 
 [2] This project is open-sourced, so anyone can access the build results for example, access is therefore only needed to create the project (which is only needed once and isn't documented here), or to modify the project.
+
+If this applies to you, please contact the *Project Maintainer* for collaboration rights.
 
 ## Setup
 
