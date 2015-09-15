@@ -1,0 +1,25 @@
+---
+
+- name: setup ci environment
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: install g++ which is required to install newman's dependencies
+      apt: update_cache=yes pkg={{ item }} state=present cache_valid_time=3600
+      with_items:
+        - g++
+    - name: install newman globally
+      # Ideally we would do this using the NPM module - but it requires github.com/ansible/ansible-modules-extras/pull/876 to be merged
+      # Note: For CI builds we can't use (and don't need SUDO), or the "--unsafe-perm" option for installing newman
+      command: npm install -g newman
+      become: no
+
+- name: setup newman
+  hosts: localhost
+  connection: local
+  vars_files:
+    - data/api-auth.yml
+  tasks:
+    - name: generate environment file
+      template: src=templates/app/environment.json.j2 dest=/home/runner/Postman-Newman-testing/environment.json

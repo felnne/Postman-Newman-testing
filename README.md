@@ -6,6 +6,11 @@ Simple project to use Postman's [Newman](https://github.com/postmanlabs/newman/)
 ## Background
 
 This project will be developed using the Government Digital Service (GDS) design phases methodology. This defines five stages:
+Currently, Newman's tests can be run:
+
+* Manually*, through a *local VM** - see this README for setup & usage instructions
+* Automatically*, through **Semaphore CI** - see this [project](https://semaphoreci.com/felnne/postman-newman-testing/) and this README for additional comments
+
 
 * *Discovery* - user requirements gathering
 * *Alpha* - prototyping based on user requirements
@@ -26,6 +31,7 @@ This API testing will form part of a Continuous Deployment (CD) process (i.e. on
 Roughly from highest to lowest priority:
 
 * Test with Semaphore
+    * Test using JUnit output format and if this helps us 
 * Add JSON Schema validation to methods to better test payloads
 * Testing with Bamboo
 * Format README using normal conventions
@@ -34,23 +40,61 @@ Roughly from highest to lowest priority:
 
 ## Requirements
 
+### Manually through a *local VM*
+
 * Typical project requirements (Vagrant, Ansible, etc.)
 * Ansible vault password file [1]
+
+### Automatically through *Semaphore CI*
+
+* Access to the [project on Semaphore](https://semaphoreci.com/felnne/postman-newman-testing/) [2]
 
 [1] This playbook uses an Ansible vault managed variables file to set the API user credentials. The password for this vault is contained in `provisioning/vault_pass.txt` and passed to the `ansible-playbook` at run time.
 
 For obvious reasons this file is **MUST NOT** be checked into source control and instead be manually copied into place. Users can request this file by contacting the BAS Web & Applications Team, see the *Feedback* section of this README for details.
 
+[2] This project is open-sourced, so anyone can access the build results for example, access is therefore only needed to create the project (which is only needed once and isn't documented here), or to modify the project.
+
 ## Setup
+
+### Manually through a *local VM*
 
 ```shell
 $ vagrant up
 $ ansible-playbook -i provisioning/development provisioning/site-dev.yml --vault-password-file provisioning/.vault_pass.txt
 ```
 
+### Automatically through *Semaphore CI*
+
+The setup of the Semaphore project will not be discussed at length here. However there are two elements that are worth documenting; configuration files and build settings.
+
+### Configuration files
+
+A single, encrypted, [configuration file](https://semaphoreci.com/docs/adding-custom-configuration-files.html) is used in this project. It contains the password to the Ansible vault passed to the `ansible-playbook` command at run-time. See the *Requirements > Manually through a local VM* section for more details.
+
+### Build settings
+
+As is possible to use Ansible with Semaphore, much of the configuration of the test environment is documented through the tasks in `provisioning/site-ci.yml`. However there are some steps that don't make sense to run through Ansible, or are needed to set Ansible up, that must be performed within Semaphore itself.
+
+These steps are documented here (and should be kept in-sync):
+
+> `sudo pip install ansible`
+> Installs Ansible.
+> 
+> `ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt --syntax-check`
+> Ensures the playbook to configure the test environment complies with Ansible's syntax rules.
+> 
+> `ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt`
+> Configures the test environment, installing Newman and its dependencies and generating the environment file with sensitive information such as API credentials.
+> 
+> `newman -c collection.json -d data.json -e environment.json --noColor --exitCode`
+> Runs Newman tests. The `--noColor` option ensures its output can be read within Semaphore, the `--exitCode` option will cause Semaphore to fail this step if any Newman test fails.
+
 ## Usage
 
 This project includes a Postman collection, data file [1] and environment [2] suitable for testing the BAS People API. These are feed into Newman and the various tests specified in requests in the collection are executed.
+
+### Manually through a *local VM*
 
 ```shell
 $ ssh app@postman-newman-dev-node1.v.m
@@ -58,6 +102,10 @@ $ newman -c collection.json -d data.json -e environment.json
 ```
 
 Note: Newman is executed manually, rather than through Ansible, to prevent Ansible swallowing all output to `stdout` (i.e. the test results).
+
+### Automatically through *Semaphore CI*
+
+Semaphore will execute Newman on each commit made to branches it is configured to build from. By default all branches are built from, unless a white list is made. During this early testing phase this default is being used.
 
 [1] This data file is simply a JSON array with each value replacing an environment variable on each iteration [3]. The number of iterations is defined by the number of items in the JSON array.
 
