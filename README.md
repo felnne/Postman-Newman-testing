@@ -155,6 +155,7 @@ This project includes a Postman collection, data file [1] and environment [2] su
 
 ```shell
 $ ssh app@postman-newman-dev-node1.v.m
+$ cd /app
 $ newman -c collection.json -d data.json -e environment.json
 ```
 
