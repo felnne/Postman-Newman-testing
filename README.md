@@ -21,7 +21,7 @@ Roughly from highest to lowest priority:
 
 #### Alpha
 
-* Add JSON Schema validation to methods to better test payloads
+* Add JSON Schema validation to methods to better test payloads [in progress]
 
 #### Beta
 
@@ -121,31 +121,19 @@ A single, encrypted, [configuration file](https://semaphoreci.com/docs/adding-cu
 
 As is possible to use Ansible with Semaphore, much of the configuration of the test environment is documented through the tasks in `provisioning/site-ci.yml`. However there are some steps that don't make sense to run through Ansible, or are needed to set Ansible up, that must be performed within Semaphore itself.
 
-These steps are documented here (and should be kept in-sync):
+These steps are listed, and documented line by line, here:
 
 ```shell
-sudo pip install ansible
+$ sudo pip install ansible
+$ ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt --syntax-check
+$ ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt
+$ newman -c collection.json -d data.json -e environment.json --noColor --exitCode
 ```
 
-Installs Ansible.
-
-```shell
-ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt --syntax-check
-```
-
-Ensures the playbook to configure the test environment complies with Ansible's syntax rules.
-
-```shell
-ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt
-```
-
-Configures the test environment, installing Newman and its dependencies and generating the environment file with sensitive information such as API credentials.
-
-```shell
-newman -c collection.json -d data.json -e environment.json --noColor --exitCode
-```
-
-Runs Newman tests. The `--noColor` option ensures its output can be read within Semaphore, the `--exitCode` option will cause Semaphore to fail this step if any Newman test fails.
+1. Installs Ansible.
+2. Ensures the playbook to configure the test environment complies with Ansible's syntax rules.
+3. Configures the test environment, installing Newman and its dependencies and generating the environment file with sensitive information such as API credentials.
+4. Runs Newman tests. The `--noColor` option ensures its output can be read within Semaphore, the `--exitCode` option will cause Semaphore to fail this step if any Newman test fails.
 
 ## Usage
 
@@ -165,6 +153,8 @@ Note: Newman is executed manually, rather than through Ansible, to prevent Ansib
 
 Semaphore will execute Newman on each commit made to branches it is configured to build from. By default all branches are built from, unless a white list is made. During this early testing phase this default is being used.
 
+You can see the results of these automatic tests [in Semaphore](https://semaphoreci.com/felnne/postman-newman-testing/).
+
 [1] This data file is simply a JSON array with each value replacing an environment variable on each iteration [3]. The number of iterations is defined by the number of items in the JSON array.
 
 [2] This environment file **SHOULD** include entries for API user credentials, however the values for these entries are stored in clear-text and therefore cannot be checked into source control.
@@ -177,8 +167,10 @@ To overcome this, the environment file is stored as a Ansible template with vari
 
 Please log all feedback to the BAS Web and Applications Team:
 
-* If you are a BAS/NERC staff member please use our [Jira project](https://jira.ceh.ac.uk/browse/BASWEB) with the *Research* and *Projects* components.
-* If you are external to BAS/NERC please email [basweb@bas.ac.uk](mailto:basweb@bas.ac.uk) to log feedback directly.
+* If you are a member of Staff at BAS or NERC please log your feedback in our [Jira project](https://jira.ceh.ac.uk/browse/BASWEB) [1], with the *Research* and *Projects* components selected, to keep things organised.
+* Otherwise please email [basweb@bas.ac.uk](mailto:basweb@bas.ac.uk) to log feedback directly.
+
+[1] If you don't have a Jira account please email [basweb@bas.ac.uk](mailto:basweb@bas.ac.uk) to request one. 
 
 ## License
 
