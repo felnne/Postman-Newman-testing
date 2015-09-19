@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema",
+  "type": "object",
+  "title": "Root schema.",
+  "description": "An explanation about the puropose of this instance described by this schema.",
+  "name": "/",
+  "properties": {
+    "notices": {
+      "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices",
+      "type": "array",
+      "title": "Notices schema.",
+      "description": "An explanation about the puropose of this instance described by this schema.",
+      "name": "notices",
+      "items": {
+        "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0",
+        "type": "object",
+        "title": "0 schema.",
+        "description": "An explanation about the puropose of this instance described by this schema.",
+        "name": "0",
+        "properties": {
+          "type": {
+            "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/type",
+            "type": "string",
+            "title": "Type schema.",
+            "description": "An explanation about the puropose of this instance described by this schema.",
+            "name": "type",
+            "default": "token_generated"
+          },
+          "details": {
+            "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details",
+            "type": "object",
+            "title": "Details schema.",
+            "description": "An explanation about the puropose of this instance described by this schema.",
+            "name": "details",
+            "properties": {
+              "expiry": {
+                "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details/expiry",
+                "type": "object",
+                "title": "Expiry schema.",
+                "description": "An explanation about the puropose of this instance described by this schema.",
+                "name": "expiry",
+                "properties": {
+                  "expires": {
+                    "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details/expiry/expires",
+                    "type": "integer",
+                    "title": "Expires schema.",
+                    "description": "An explanation about the puropose of this instance described by this schema.",
+                    "name": "expires",
+                    "default": 1442669841
+                  },
+                  "message": {
+                    "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details/expiry/message",
+                    "type": "string",
+                    "title": "Message schema.",
+                    "description": "An explanation about the puropose of this instance described by this schema.",
+                    "name": "message",
+                    "default": "This token will expire at: 2015-09-19 14:37:21, at which point you will need to request a new token."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "type",
+          "details"
+        ]
+      },
+      "required": [
+        "0"
+      ]
+    },
+    "data": {
+      "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/data",
+      "type": "object",
+      "title": "Data schema.",
+      "description": "An explanation about the puropose of this instance described by this schema.",
+      "name": "data",
+      "properties": {
+        "token": {
+          "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/data/token",
+          "type": "string",
+          "title": "Token schema.",
+          "description": "An explanation about the puropose of this instance described by this schema.",
+          "name": "token",
+          "default": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmJhcy5hYy51a1wvdjFcL3Rva2VucyIsInN1YiI6MSwiaWF0IjoxNDQyNjY2MjQxLCJleHAiOjE0NDI2Njk4NDF9.bd9hzaMvORFE2JSRwdV3FluScT5QFwU1XvDGaQ2CqZ8"
+        }
+      }
+    }
+  },
+  "required": [
+    "notices",
+    "data"
+  ]
+}
