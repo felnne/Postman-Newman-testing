@@ -13,63 +13,27 @@
       "description": "An explanation about the puropose of this instance described by this schema.",
       "name": "notices",
       "items": {
-        "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0",
+        "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/notice",
         "type": "object",
-        "title": "0 schema.",
         "description": "An explanation about the puropose of this instance described by this schema.",
-        "name": "0",
+        "title": "Notice schema.",
+        "name": "notice",
         "properties": {
           "type": {
-            "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/type",
+            "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/notice/type",
             "type": "string",
             "title": "Type schema.",
             "description": "An explanation about the puropose of this instance described by this schema.",
             "name": "type",
             "default": "token_generated"
           },
-          "details": {
-            "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details",
-            "type": "object",
-            "title": "Details schema.",
-            "description": "An explanation about the puropose of this instance described by this schema.",
-            "name": "details",
-            "properties": {
-              "expiry": {
-                "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details/expiry",
-                "type": "object",
-                "title": "Expiry schema.",
-                "description": "An explanation about the puropose of this instance described by this schema.",
-                "name": "expiry",
-                "properties": {
-                  "expires": {
-                    "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details/expiry/expires",
-                    "type": "integer",
-                    "title": "Expires schema.",
-                    "description": "An explanation about the puropose of this instance described by this schema.",
-                    "name": "expires",
-                    "default": 1442669841
-                  },
-                  "message": {
-                    "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/0/details/expiry/message",
-                    "type": "string",
-                    "title": "Message schema.",
-                    "description": "An explanation about the puropose of this instance described by this schema.",
-                    "name": "message",
-                    "default": "This token will expire at: 2015-09-19 14:37:21, at which point you will need to request a new token."
-                  }
-                }
-              }
-            }
           }
         },
         "required": [
-          "type",
-          "details"
+          "type"
         ]
       },
-      "required": [
-        "0"
-      ]
+      "additionalItems": false
     },
     "data": {
       "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/data",
@@ -86,11 +50,13 @@
           "name": "token",
           "default": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmJhcy5hYy51a1wvdjFcL3Rva2VucyIsInN1YiI6MSwiaWF0IjoxNDQyNjY2MjQxLCJleHAiOjE0NDI2Njk4NDF9.bd9hzaMvORFE2JSRwdV3FluScT5QFwU1XvDGaQ2CqZ8"
         }
-      }
+      },
+      "required": [
+        "token"
+      ]
     }
   },
   "required": [
-    "notices",
     "data"
   ]
 }
