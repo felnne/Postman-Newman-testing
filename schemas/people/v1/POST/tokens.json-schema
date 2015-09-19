@@ -3,30 +3,29 @@
   "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema",
   "type": "object",
   "title": "Root schema.",
-  "description": "An explanation about the puropose of this instance described by this schema.",
+  "description": "Response payload returned after successfully generating a new auth token for the BAS People API - Version 1.",
   "name": "/",
   "properties": {
     "notices": {
       "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices",
       "type": "array",
       "title": "Notices schema.",
-      "description": "An explanation about the puropose of this instance described by this schema.",
+      "description": "One or more notices. Whether any are defined will depend on the rest of the response.",
       "name": "notices",
       "items": {
         "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/notice",
         "type": "object",
-        "description": "An explanation about the puropose of this instance described by this schema.",
         "title": "Notice schema.",
+        "description": "A human readable, informative, message regarding an aspect of the response or the service generally.",
         "name": "notice",
         "properties": {
           "type": {
             "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/notices/notice/type",
             "type": "string",
-            "title": "Type schema.",
-            "description": "An explanation about the puropose of this instance described by this schema.",
+            "title": "Notice type schema.",
+            "description": "A concise, URL safe, machine and human readable, description of the kind of notice.",
             "name": "type",
-            "default": "token_generated"
-          },
+            "example": "token_generated"
           }
         },
         "required": [
@@ -38,17 +37,17 @@
     "data": {
       "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/data",
       "type": "object",
-      "title": "Data schema.",
-      "description": "An explanation about the puropose of this instance described by this schema.",
+      "title": "Token data schema.",
+      "description": "A valid API authentication token and associated, machine readable, meta-data.",
       "name": "data",
       "properties": {
         "token": {
           "id": "https://s3-eu-west-1.amazonaws.com/packages.calcifer.co/scratch/schemas.api.bas.ac.uk/people/v1/POST/tokens.json-schema/data/token",
           "type": "string",
           "title": "Token schema.",
-          "description": "An explanation about the puropose of this instance described by this schema.",
+          "description": "A valid API authentication token.",
           "name": "token",
-          "default": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmJhcy5hYy51a1wvdjFcL3Rva2VucyIsInN1YiI6MSwiaWF0IjoxNDQyNjY2MjQxLCJleHAiOjE0NDI2Njk4NDF9.bd9hzaMvORFE2JSRwdV3FluScT5QFwU1XvDGaQ2CqZ8"
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmJhcy5hYy51a1wvdjFcL3Rva2VucyIsInN1YiI6MSwiaWF0IjoxNDQyNjY2MjQxLCJleHAiOjE0NDI2Njk4NDF9.bd9hzaMvORFE2JSRwdV3FluScT5QFwU1XvDGaQ2CqZ8"
         }
       },
       "required": [
