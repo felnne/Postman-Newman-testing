@@ -1,15 +1,12 @@
 
 # Postman Newman testing
 
-Simple project to use Postman's [Newman](https://github.com/postmanlabs/newman/) tool to test the BAS People API.
+Master [![Build Status](https://semaphoreci.com/api/v1/projects/d8c4baad-0adf-4c81-9c37-4e0cdfbb7c01/540592/badge.svg)](https://semaphoreci.com/felnne/postman-newman-testing)
+Develop [![Build Status](https://semaphoreci.com/api/v1/projects/d8c4baad-0adf-4c81-9c37-4e0cdfbb7c01/540590/badge.svg)](https://semaphoreci.com/felnne/postman-newman-testing)
 
-## Background
+Simple project to try Postman's [Newman](https://github.com/postmanlabs/newman/) tool to test the BAS People API.
 
-This project is part of a project to add a testing and deployment workflow to BAS APIs in order to reduce manual testing/verification of changes, improve the speed changes are delivered and improve the robustness of our services.
-
-The tests performed by Newman will need to executed by *something*, ideally this would be some sort of Continuous Integration (CI) service, such as [Semaphore](semaphoreci.com) or [Bamboo](https://www.atlassian.com/software/bamboo), though manual testing will still be needed.
-
-This API testing will form part of a Continuous Deployment (CD) process (i.e. only deploy if tests are green). Ideally the CI and CD process would both be performed by the same service (in additional to manually) to reduce costs and configuration.
+## Overview
 
 Currently, Newman's tests can be run:
 
@@ -18,6 +15,23 @@ Currently, Newman's tests can be run:
 
 This project is already a cautious success in that it has highlighted one major error (API tokens cannot be blacklisted) and several minor defects (incorrect status codes being returned etc.).
 
+### TODO
+
+Roughly from highest to lowest priority:
+
+#### Alpha
+
+* Add JSON Schema validation to methods to better test payloads [in progress]
+
+#### Beta
+
+* Testing with Bamboo
+* ~~Test with Semaphore~~ (done, but not sub-tasks)
+    * Test using JUnit output format and if this helps us 
+* Format README using normal conventions
+* Work on a proper way to store and distribute Ansible vault password files (add to prelude role? Download from team directory? [Private key for authentication] or S3 bucket? [ENV_VAR for authentication])
+* If Newman proves useful, convert into a proper BARC role
+
 ### Why do these tests always fail?
 
 These tests include assessing the performance of the API, which, as the results of these tests show, isn't currently very good.
@@ -25,6 +39,27 @@ These tests include assessing the performance of the API, which, as the results 
 Until this can be addressed **it is expected** when these tests are run together they will fail (i.e. if any one test fails, they all collectively fail).
 
 However, this only applies to the *performance* related tests, all the other *functional* tests should pass [1].
+
+### Background
+
+This project is part of a larger/wider effort to make iterative development and deployment of BAS APIs easier and carry less risk to their reliability and availability. Specially we aim to:
+
+* Use isolated environments to develop, stage/test and deploy into production
+* Use better tools for provisioning/configuration these environments
+* Use linting, code-formatting and other similar tools to prevent simple errors (no more 'Whoops, missed a `;`' commits)
+* Reduce the need for manual testing when changes are made and prevent 'I forgot that edge case' type testing mistakes
+* Minimise lengthy, and easily out-of-date, documentation by documenting through code where possible
+* Make deployments to staging/manual-testing and production environments automatic including rolling-back changes, where possible, 
+* Monitor the state of our deployed services better to spot problems before users/clients do
+* Make our services more robust and available using fail-overs where this make sense
+
+This is obviously quite a lot to work on, and will be tackled through a number of different, smaller, projects like this one.
+
+This project focuses on *Reducing the need for manual testing when changes are made and prevent 'I forgot that edge case' type testing mistakes*, but relates to other projects, namely:
+
+The tests performed by Newman will need to executed by *something*, ideally this would be some sort of Continuous Integration (CI) service, such as [Semaphore](semaphoreci.com) or [Bamboo](https://www.atlassian.com/software/bamboo), though manual testing will still be needed.
+
+This API testing will form part of a Continuous Deployment (CD) process (i.e. only deploy if tests are green). Ideally the CI and CD process would both be performed by the same service (in additional to manually) to reduce costs and configuration.
 
 ### Project management
 
@@ -45,23 +80,6 @@ The Project Maintainer for this project is: [Felix Fennell](mailto:felnne@bas.ac
 * *Retirement* - either because it will be replaced or discontinued
 
 [3] Please use the information in the *Feedback* section, rather than direct contact.
-
-## TODO
-
-Roughly from highest to lowest priority:
-
-### Alpha
-
-* Test with Semaphore
-    * Test using JUnit output format and if this helps us 
-* Add JSON Schema validation to methods to better test payloads
-
-### Beta
-
-* Testing with Bamboo
-* Format README using normal conventions
-* Work on a proper way to store and distribute Ansible vault password files (add to prelude role? Download from team directory? [Private key for authentication] or S3 bucket? [ENV_VAR for authentication])
-* If Newman proves useful, convert into a proper BARC role
 
 ## Requirements
 
@@ -103,19 +121,19 @@ A single, encrypted, [configuration file](https://semaphoreci.com/docs/adding-cu
 
 As is possible to use Ansible with Semaphore, much of the configuration of the test environment is documented through the tasks in `provisioning/site-ci.yml`. However there are some steps that don't make sense to run through Ansible, or are needed to set Ansible up, that must be performed within Semaphore itself.
 
-These steps are documented here (and should be kept in-sync):
+These steps are listed, and documented line by line, here:
 
-> `sudo pip install ansible`
-> Installs Ansible.
-> 
-> `ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt --syntax-check`
-> Ensures the playbook to configure the test environment complies with Ansible's syntax rules.
-> 
-> `ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt`
-> Configures the test environment, installing Newman and its dependencies and generating the environment file with sensitive information such as API credentials.
-> 
-> `newman -c collection.json -d data.json -e environment.json --noColor --exitCode`
-> Runs Newman tests. The `--noColor` option ensures its output can be read within Semaphore, the `--exitCode` option will cause Semaphore to fail this step if any Newman test fails.
+```shell
+$ sudo pip install ansible
+$ ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt --syntax-check
+$ ansible-playbook -i provisioning/local provisioning/site-ci.yml --vault-password-file provisioning/.vault_pass.txt
+$ newman -c collection.json -d data.json -e environment.json --noColor --exitCode
+```
+
+1. Installs Ansible.
+2. Ensures the playbook to configure the test environment complies with Ansible's syntax rules.
+3. Configures the test environment, installing Newman and its dependencies and generating the environment file with sensitive information such as API credentials.
+4. Runs Newman tests. The `--noColor` option ensures its output can be read within Semaphore, the `--exitCode` option will cause Semaphore to fail this step if any Newman test fails.
 
 ## Usage
 
@@ -125,6 +143,7 @@ This project includes a Postman collection, data file [1] and environment [2] su
 
 ```shell
 $ ssh app@postman-newman-dev-node1.v.m
+$ cd /app
 $ newman -c collection.json -d data.json -e environment.json
 ```
 
@@ -133,6 +152,8 @@ Note: Newman is executed manually, rather than through Ansible, to prevent Ansib
 ### Automatically through *Semaphore CI*
 
 Semaphore will execute Newman on each commit made to branches it is configured to build from. By default all branches are built from, unless a white list is made. During this early testing phase this default is being used.
+
+You can see the results of these automatic tests [in Semaphore](https://semaphoreci.com/felnne/postman-newman-testing/).
 
 [1] This data file is simply a JSON array with each value replacing an environment variable on each iteration [3]. The number of iterations is defined by the number of items in the JSON array.
 
@@ -146,8 +167,10 @@ To overcome this, the environment file is stored as a Ansible template with vari
 
 Please log all feedback to the BAS Web and Applications Team:
 
-* If you are a BAS/NERC staff member please use our [Jira project](https://jira.ceh.ac.uk/browse/BASWEB) with the *Research* and *Projects* components.
-* If you are external to BAS/NERC please email [basweb@bas.ac.uk](mailto:basweb@bas.ac.uk) to log feedback directly.
+* If you are a member of Staff at BAS or NERC please log your feedback in our [Jira project](https://jira.ceh.ac.uk/browse/BASWEB) [1], with the *Research* and *Projects* components selected, to keep things organised.
+* Otherwise please email [basweb@bas.ac.uk](mailto:basweb@bas.ac.uk) to log feedback directly.
+
+[1] If you don't have a Jira account please email [basweb@bas.ac.uk](mailto:basweb@bas.ac.uk) to request one. 
 
 ## License
 
