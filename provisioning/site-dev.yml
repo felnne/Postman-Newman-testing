@@ -20,7 +20,7 @@
   hosts: postman-newman-dev
   remote_user: app
   vars_files:
-    - data/api-auth.yml
+    - vars/api-auth.yml
   tasks:
     - name: generate environment file
       template: src=templates/app/environment.json.j2 dest=/app/environment.json
