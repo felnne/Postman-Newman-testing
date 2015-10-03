@@ -2,5 +2,4 @@
 # These variables override those defined by roles
 
 project_hostname_project: "postman-newman"
-project_repository: ""
-
+project_repository: "git@github.com:felnne/Postman-Newman-testing.git"

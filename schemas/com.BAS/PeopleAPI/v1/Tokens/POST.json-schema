@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://schemas.data.bas.ac.uk/com.BAS/PeopleAPI/v1/Tokens/POST.json-schema",
+  "type": "object",
+  "title": "Root schema.",
+  "description": "Response payload returned after successfully generating a new authentication token for the BAS People API - Version 1.",
+  "name": "/",
+  "self": {
+    "vendor": "com.BAS",
+    "project": "PeopleAPI",
+    "projectVersion": "1",
+    "name": "TokensPost",
+    "format": "jsonschema",
+    "version": "1-0-0",
+    "version_schema": "SchemaVer"
+  },
+  "properties": {
+    "notices": {
+      "id": "https://schemas.data.bas.ac.uk/com.BAS/PeopleAPI/v1/Tokens/POST.json-schema/notices",
+      "type": "array",
+      "title": "Notices schema.",
+      "description": "One or more notices. Whether any are defined will depend on the rest of the response.",
+      "name": "notices",
+      "items": {
+        "id": "https://schemas.data.bas.ac.uk/com.BAS/PeopleAPI/v1/Tokens/POST.json-schema/notices/notice",
+        "type": "object",
+        "title": "Notice schema.",
+        "description": "A human readable, informative, message regarding an aspect of the response or the service generally.",
+        "name": "notice",
+        "properties": {
+          "type": {
+            "id": "https://schemas.data.bas.ac.uk/com.BAS/PeopleAPI/v1/Tokens/POST.json-schema/notices/notice/type",
+            "type": "string",
+            "title": "Notice type schema.",
+            "description": "A concise, URL safe, machine and human readable, description of the kind of notice.",
+            "name": "type",
+            "example": "token_generated"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "additionalItems": false
+    },
+    "data": {
+      "id": "https://schemas.data.bas.ac.uk/com.BAS/PeopleAPI/v1/Tokens/POST.json-schema/data",
+      "type": "object",
+      "title": "Token data schema.",
+      "description": "A valid API authentication token and associated, machine readable, meta-data.",
+      "name": "data",
+      "properties": {
+        "token": {
+          "id": "https://schemas.data.bas.ac.uk/com.BAS/PeopleAPI/v1/Tokens/POST.json-schema/data/token",
+          "type": "string",
+          "title": "Token schema.",
+          "description": "A valid API authentication token.",
+          "name": "token",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmJhcy5hYy51a1wvdjFcL3Rva2VucyIsInN1YiI6MSwiaWF0IjoxNDQyNjY2MjQxLCJleHAiOjE0NDI2Njk4NDF9.bd9hzaMvORFE2JSRwdV3FluScT5QFwU1XvDGaQ2CqZ8"
+        }
+      },
+      "required": [
+        "token"
+      ]
+    }
+  },
+  "required": [
+    "data"
+  ]
+}
