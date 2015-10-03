@@ -118,15 +118,12 @@ If this applies to you, please contact the *Project Maintainer* for collaboratio
 
 ## Setup
 
-First clone this repository:
-
-```shell
-$ git clone git@github.com:felnne/Postman-Newman-testing.git
-```
-
 ### Manually through a *local VM*
 
 ```shell
+$ git clone git@github.com:felnne/Postman-Newman-testing.git
+$ cd postman-newman-testing
+
 $ vagrant up
 $ ansible-playbook -i provisioning/development provisioning/site-dev.yml --vault-password-file provisioning/.vault_pass.txt
 ```
